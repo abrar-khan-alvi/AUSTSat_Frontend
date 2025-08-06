@@ -1,10 +1,14 @@
-# Ground Station Mission Control Dashboard
-A real-time web dashboard for the AUST Nano Satellite project, designed to monitor the environmental data, stability, and camera feed from a ground station running on a Raspberry Pi. This application uses React for the frontend and Firebase Realtime Database for live data synchronization.
+# Ground Station Mission Control Dashboard for AUSTSat
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### [View Live Demo](austsat.vercel.app/)
+A real-time web dashboard for the AUST Nano Satellite project, designed to monitor environmental data, stability, and camera feed from a ground station running on a Raspberry Pi. This application uses React for the frontend and Firebase Realtime Database for live data synchronization.
+
+### 🚀 [View Live Demo](https://austsat.vercel.app/) 🚀
 
 
-*(Suggestion: Replace this placeholder image with a screenshot of your own finished dashboard!)*
+*(This is a placeholder image. It's highly recommended to replace this with a full screenshot of your own amazing dashboard!)*
+
+---
 
 ## Features
 
@@ -49,8 +53,8 @@ To run this project locally, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git
-    cd YOUR_REPO_NAME
+    git clone https://github.com/abrar-khan-alvi/AUSTSat_Frontend.git
+    cd AUSTSat_Frontend
     ```
 
 2.  **Install dependencies:**
@@ -85,3 +89,7 @@ This project is set up for easy deployment with **Vercel**.
 2.  **Import to Vercel:** Import your GitHub repository into Vercel. Vercel will automatically detect that it's a Vite/React project.
 3.  **Add Environment Variables:** In the Vercel project settings, add the same environment variables from your `.env.local` file. This is a crucial step for the deployed version to connect to your Firebase database.
 4.  **Deploy:** Vercel will build and deploy the project. Any subsequent pushes to the `main` branch on GitHub will trigger automatic redeployments.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
