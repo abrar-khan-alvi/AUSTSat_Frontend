@@ -1,10 +1,7 @@
 # Ground Station Mission Control Dashboard
-
-[![Deploy with Vercel](https://vercel.com/button)](austsat.vercel.app)
-
 A real-time web dashboard for the AUST Nano Satellite project, designed to monitor the environmental data, stability, and camera feed from a ground station running on a Raspberry Pi. This application uses React for the frontend and Firebase Realtime Database for live data synchronization.
 
-### [View Live Demo](https://your-project-url.vercel.app/)
+### [View Live Demo](austsat.vercel.app/)
 
 
 *(Suggestion: Replace this placeholder image with a screenshot of your own finished dashboard!)*
