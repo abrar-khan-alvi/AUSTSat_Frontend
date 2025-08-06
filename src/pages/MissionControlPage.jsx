@@ -1,0 +1,84 @@
+import React, { useState, useEffect } from 'react';
+import { subscribeToLatestTelemetry } from '../utils/satelliteApi'; 
+
+// Components
+import SatelliteStatusCard from '../components/SatelliteStatusCard';
+import OrientationVisualizer from '../components/OrientationVisualizer';
+import CompassDial from '../components/CompassDial';
+import MissionControlImageDisplay from '../components/MissionControlImageDisplay';
+import { Thermometer, Zap, Droplets, Gauge, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+
+const MissionControlPage = () => {
+  const [currentData, setCurrentData] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToLatestTelemetry((latestData) => {
+      if (latestData && latestData.sensor_readings) {
+        
+        // --- Calculate G-Force for the Stability Card ---
+        const { Ax, Ay, Az } = latestData.sensor_readings;
+        const gForce = Math.sqrt(Ax**2 + Ay**2 + Az**2);
+        
+        const formattedData = {
+          temperature: latestData.sensor_readings.T.toFixed(1),
+          pressure: latestData.sensor_readings.P.toFixed(1),
+          humidity: latestData.sensor_readings.H.toFixed(1),
+          stability: gForce.toFixed(2), // Our new stability metric
+          status: 'OPERATIONAL', // You can define logic for this later
+        };
+        setCurrentData(formattedData);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (!currentData) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 mx-auto text-blue-400 animate-spin mb-4" />
+          <h1 className="text-3xl font-bold">Connecting to Ground Station...</h1>
+          <p className="text-blue-300">Awaiting initial telemetry data.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      {/* --- Top Header --- */}
+      <div className="bg-gradient-to-r from-blue-900 to-purple-900 rounded-xl p-8 border border-gray-700">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-2">GROUND STATION MONITOR</h1>
+            <p className="text-blue-200">Real-time environmental and stability monitoring</p>
+          </div>
+          <div className="text-right">
+            <div className="text-sm text-blue-200">SYSTEM STATUS</div>
+            <div className="text-2xl font-bold flex items-center text-green-400">
+              <CheckCircle className="h-6 w-6 mr-2" />
+              OPERATIONAL
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* --- NEW Top 4 Cards --- */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <SatelliteStatusCard title="Temperature" value={currentData.temperature} unit="°C" icon={Thermometer} color="orange" />
+        <SatelliteStatusCard title="Pressure" value={currentData.pressure} unit="hPa" icon={Zap} color="blue" />
+        <SatelliteStatusCard title="Humidity" value={currentData.humidity} unit="%" icon={Droplets} color="teal" />
+        <SatelliteStatusCard title="Stability" value={currentData.stability} unit="G" icon={Gauge} color="purple" />
+      </div>
+      
+      {/* --- NEW Bottom 3 Panels --- */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <OrientationVisualizer />
+        <CompassDial />
+        <MissionControlImageDisplay />
+      </div>
+    </div>
+  );
+};
+
+export default MissionControlPage;
