@@ -5,37 +5,23 @@ import LandingPage from './pages/LandingPage';
 import MissionControlPage from './pages/MissionControlPage';
 import TelemetryPage from './pages/TelemetryPage';
 import EarthObservationPage from './pages/EarthObservationPage';
-import { generateSatelliteData, generateOrbitalData } from './data/generateData';
 
 const App = () => {
   const [isAppEntered, setIsAppEntered] = useState(false);
-  const [currentData, setCurrentData] = useState(generateSatelliteData());
-  const [orbitalData, setOrbitalData] = useState(generateOrbitalData());
-  const [imageGallery, setImageGallery] = useState([]);
-  const [modalImage, setModalImage] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState(true);
 
   useEffect(() => {
     if (!isAppEntered) return;
+
+    // Simulate the connection status update
     const interval = setInterval(() => {
-      const newData = generateSatelliteData();
-      setCurrentData(newData);
-      setConnectionStatus(Math.random() > 0.05);
-      setOrbitalData(prev => [...prev.slice(1), {
-        ...newData,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        orbit_position: (prev[prev.length - 1]?.orbit_position + 7.2) % 360,
-      }]);
-      setImageGallery(prev => [newData, ...prev.slice(0, 15)]);
+      setConnectionStatus(Math.random() > 0.05);  // Randomly change the connection status
     }, 6000);
-    return () => clearInterval(interval);
+
+    return () => clearInterval(interval);  // Clean up the interval on unmount
   }, [isAppEntered]);
 
-  useEffect(() => {
-    if (!isAppEntered) return;
-    setImageGallery(Array.from({ length: 16 }, () => generateSatelliteData()));
-  }, [isAppEntered]);
-
+  // Display the landing page until the user enters the app
   if (!isAppEntered) return <LandingPage onEnter={() => setIsAppEntered(true)} />;
 
   return (
@@ -45,9 +31,9 @@ const App = () => {
         <main className="w-full mx-auto py-8 px-4">
           <Routes>
             <Route path="/" element={<Navigate to="/mission-control" replace />} />
-            <Route path="/mission-control" element={<MissionControlPage currentData={currentData} />} />
-            <Route path="/telemetry" element={<TelemetryPage orbitalData={orbitalData} />} />
-            <Route path="/earth-observation" element={<EarthObservationPage imageGallery={imageGallery} setModalImage={setModalImage} />} />
+            <Route path="/mission-control" element={<MissionControlPage />} />
+            <Route path="/telemetry" element={<TelemetryPage />} />
+            <Route path="/earth-observation" element={<EarthObservationPage />} />
             <Route path="*" element={<div className="text-white">404 - Page Not Found</div>} />
           </Routes>
         </main>
