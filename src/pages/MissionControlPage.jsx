@@ -6,7 +6,7 @@ import SatelliteStatusCard from '../components/SatelliteStatusCard';
 import OrientationVisualizer from '../components/OrientationVisualizer';
 import CompassDial from '../components/CompassDial';
 import MissionControlImageDisplay from '../components/MissionControlImageDisplay';
-import { Thermometer, Zap, Droplets, Gauge, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Thermometer, Zap, Droplets, Gauge, CheckCircle, Loader2 } from 'lucide-react';
 
 const MissionControlPage = () => {
   const [currentData, setCurrentData] = useState(null);
@@ -45,11 +45,11 @@ const MissionControlPage = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 px-4 md:px-8">
       {/* --- Top Header --- */}
       <div className="bg-gradient-to-r from-blue-900 to-purple-900 rounded-xl p-8 border border-gray-700">
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col sm:flex-row items-center justify-between">
+          <div className="mb-4 sm:mb-0">
             <h1 className="text-4xl font-bold text-white mb-2">GROUND STATION MONITOR</h1>
             <p className="text-blue-200">Real-time environmental and stability monitoring</p>
           </div>
@@ -64,7 +64,7 @@ const MissionControlPage = () => {
       </div>
       
       {/* --- NEW Top 4 Cards --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <SatelliteStatusCard title="Temperature" value={currentData.temperature} unit="°C" icon={Thermometer} color="orange" />
         <SatelliteStatusCard title="Pressure" value={currentData.pressure} unit="hPa" icon={Zap} color="blue" />
         <SatelliteStatusCard title="Humidity" value={currentData.humidity} unit="%" icon={Droplets} color="teal" />
@@ -72,7 +72,7 @@ const MissionControlPage = () => {
       </div>
       
       {/* --- NEW Bottom 3 Panels --- */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <OrientationVisualizer />
         <CompassDial />
         <MissionControlImageDisplay />
