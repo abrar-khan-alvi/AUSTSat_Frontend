@@ -6,7 +6,7 @@ A real-time web dashboard for the AUST Nano Satellite project, designed to monit
 ### 🚀 [View Live Demo](https://austsat.vercel.app/) 🚀
 
 
-*(This is a placeholder image. It's highly recommended to replace this with a full screenshot of your own amazing dashboard!)*
+![alt text](https://github.com/abrar-khan-alvi/AUSTSat_Frontend/blob/main/demo.png)
 
 ---
 
