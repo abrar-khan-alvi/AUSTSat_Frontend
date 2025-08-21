@@ -83,7 +83,7 @@ const CompassDial = () => {
       {/* This stays static below the dial for a clear numerical reading */}
       <div className="text-center">
         <span className="text-5xl font-bold text-white tracking-wider">
-          {heading.toFixed(0).padStart(3, '0')}
+          {heading?.toFixed(0)?.padStart(3, '0') ?? 'N/A'}
         </span>
         <span className="text-5xl font-light text-gray-500">°</span>
         <span className="ml-3 text-2xl font-semibold text-blue-400">

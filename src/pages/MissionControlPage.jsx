@@ -13,18 +13,23 @@ const MissionControlPage = () => {
 
   useEffect(() => {
     const unsubscribe = subscribeToLatestTelemetry((latestData) => {
+      // Add a robust check to ensure the necessary data structure exists
       if (latestData && latestData.sensor_readings) {
         
         // --- Calculate G-Force for the Stability Card ---
-        const { Ax, Ay, Az } = latestData.sensor_readings;
+        // Use default values (0) if Ax, Ay, or Az are missing
+        const { Ax = 0, Ay = 0, Az = 0 } = latestData.sensor_readings;
         const gForce = Math.sqrt(Ax**2 + Ay**2 + Az**2);
         
+        // Safely access sensor readings and format them
         const formattedData = {
-          temperature: latestData.sensor_readings.T.toFixed(1),
-          pressure: latestData.sensor_readings.P.toFixed(1),
-          humidity: latestData.sensor_readings.H.toFixed(1),
-          stability: gForce.toFixed(2), // Our new stability metric
-          status: 'OPERATIONAL', // You can define logic for this later
+          // Use optional chaining (?.) before .toFixed()
+          // Use the nullish coalescing operator (??) to provide a default value
+          temperature: latestData.sensor_readings.T?.toFixed(1) ?? 'N/A',
+          pressure: latestData.sensor_readings.P?.toFixed(1) ?? 'N/A',
+          humidity: latestData.sensor_readings.H?.toFixed(1) ?? 'N/A',
+          stability: gForce.toFixed(2), // gForce is safe because we defaulted Ax,Ay,Az to 0
+          status: 'OPERATIONAL',
         };
         setCurrentData(formattedData);
       }

@@ -70,30 +70,57 @@ const MissionControlImageDisplay = () => {
   const [telemetryData, setTelemetryData] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = subscribeToLatestTelemetry((latestData) => {
-      if (latestData && latestData.sensor_readings) {
-        const { Ax, Ay, Az, Gx, Gy, Gz } = latestData.sensor_readings;
-        // G-Force: Using 2G as a reasonable max for vibration visualization
-        const gForce = Math.sqrt(Ax**2 + Ay**2 + Az**2); 
-        // Rotation Speed: Using 360dps as a max for visualization
-        const rotationSpeed = Math.sqrt(Gx**2 + Gy**2 + Gz**2);
+useEffect(() => {
+  const unsubscribe = subscribeToLatestTelemetry((latestData) => {
+    // Let's see the raw data no matter what.
+    console.log("Received latest data:", latestData);
 
-        setTelemetryData({
-          imgSrc: `data:image/jpeg;base64,${latestData.image_base64}`,
-          timestamp: latestData.sensor_readings.capture_timestamp,
-          humidity: latestData.sensor_readings.H,
-          temperature: latestData.sensor_readings.T,
-          pressure: latestData.sensor_readings.P,
-          pitch: latestData.sensor_readings.Pitch,
-          roll: latestData.sensor_readings.Roll,
-          vibration: gForce,
-          rotation: rotationSpeed,
-        });
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+    if (!latestData) {
+      console.warn("No latest data received from Firebase.");
+      return; // Exit if there's no data at all
+    }
+
+    let readings = null;
+
+    // --- ADAPTIVE DATA STRUCTURE CHECK ---
+    // First, check for the expected nested structure.
+    if (latestData.sensor_readings) {
+      console.log("Detected NESTED sensor_readings object.");
+      readings = latestData.sensor_readings;
+    } 
+    // If not found, check if the properties exist at the top level (flat structure).
+    else if (latestData.T !== undefined && latestData.P !== undefined) {
+      console.log("Detected FLAT data structure.");
+      readings = latestData; // The whole object is the readings
+    }
+
+    // --- PROCESS THE DATA ---
+    // Now, only proceed if we successfully found the readings object.
+    if (readings) {
+      const { Ax = 0, Ay = 0, Az = 0, Gx = 0, Gy = 0, Gz = 0 } = readings;
+      
+      const gForce = Math.sqrt(Ax**2 + Ay**2 + Az**2); 
+      const rotationSpeed = Math.sqrt(Gx**2 + Gy**2 + Gz**2);
+
+      setTelemetryData({
+        imgSrc: `data:image/jpeg;base64,${latestData.image_base64}`,
+        timestamp: readings.capture_timestamp,
+        humidity: readings.H ?? 0,
+        temperature: readings.T ?? 0,
+        pressure: readings.P ?? 0,
+        pitch: readings.Pitch ?? 0,
+        roll: readings.Roll ?? 0,
+        vibration: gForce,
+        rotation: rotationSpeed,
+      });
+    } else {
+      // If we reach here, the data is in a format we don't recognize at all.
+      console.error("Could not find sensor readings in the received data. The data object is malformed.", latestData);
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
 
   if (!telemetryData) {
     return (
