@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { subscribeToLatestTelemetry } from '../utils/satelliteApi'; 
-
-// Components
 import SatelliteStatusCard from '../components/SatelliteStatusCard';
 import OrientationVisualizer from '../components/OrientationVisualizer';
 import CompassDial from '../components/CompassDial';
 import MissionControlImageDisplay from '../components/MissionControlImageDisplay';
-import { Thermometer, Zap, Droplets, Gauge, CheckCircle, Loader2 } from 'lucide-react';
+import { Thermometer, Zap, Droplets, Gauge, CheckCircle, Loader2,Linkedin } from 'lucide-react';
 
 const MissionControlPage = () => {
   const [currentData, setCurrentData] = useState(null);
@@ -82,6 +80,29 @@ const MissionControlPage = () => {
         <CompassDial />
         <MissionControlImageDisplay />
       </div>
+<a
+        href="https://www.linkedin.com/in/abrar-khan-alvi-a218b0234/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group fixed bottom-6 right-6"
+        aria-label="Connect with Abrar Khan Alvi on LinkedIn"
+      >
+        <div className="relative flex items-center">
+          {/* Tooltip */}
+          <span className="absolute right-full mr-4 px-3 py-1.5 bg-gray-800 text-white text-sm font-medium rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Created by Abrar Khan Alvi
+          </span>
+          
+          {/* Circular Button */}
+          <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center overflow-hidden shadow-2xl transform group-hover:scale-110 transition-all duration-300 ease-in-out">
+            <img 
+              src="/profile.png" // Make sure your image is in the `public` folder
+              alt="Creator: Abrar Khan Alvi"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </a>
     </div>
   );
 };

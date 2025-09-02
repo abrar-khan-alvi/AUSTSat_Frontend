@@ -8,7 +8,7 @@ const navItems = [
   { id: 'earth-observation', label: 'Earth Observation', icon: Images, path: '/earth-observation' }
 ];
 
-const MissionControlNavbar = ({ connectionStatus, lastUpdate }) => {
+const MissionControlNavbar = ({ lastUpdate }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -59,12 +59,12 @@ const MissionControlNavbar = ({ connectionStatus, lastUpdate }) => {
           {/* Status indicators - Desktop */}
           <div className="hidden md:flex items-center space-x-4 text-sm">
             <div className="flex items-center bg-gray-800 bg-opacity-50 px-3 py-1.5 rounded-full backdrop-blur-sm">
-              {connectionStatus ? 
+              { 1==1 ? 
                 <Wifi className="h-4 w-4 text-green-400 mr-2 animate-pulse" /> : 
                 <WifiOff className="h-4 w-4 text-red-400 mr-2" />
               }
-              <span className={`font-medium ${connectionStatus ? 'text-green-400' : 'text-red-400'}`}>
-                {connectionStatus ? 'CONNECTED' : 'OFFLINE'}
+              <span className={`font-medium ${1==1 ? 'text-green-400' : 'text-red-400'}`}>
+                {1==1 ? 'CONNECTED' : 'OFFLINE'}
               </span>
             </div>
             <div className="text-gray-400 flex items-center bg-gray-800 bg-opacity-50 px-3 py-1.5 rounded-full backdrop-blur-sm">
@@ -76,7 +76,7 @@ const MissionControlNavbar = ({ connectionStatus, lastUpdate }) => {
           {/* Mobile status indicator */}
           <div className="md:hidden flex items-center space-x-3">
             <div className="flex items-center">
-              {connectionStatus ? 
+              {1==1 ? 
                 <Wifi className="h-4 w-4 text-green-400" /> : 
                 <WifiOff className="h-4 w-4 text-red-400" />
               }
@@ -124,12 +124,12 @@ const MissionControlNavbar = ({ connectionStatus, lastUpdate }) => {
             <div className="pt-4 border-t border-gray-700 space-y-3">
               <div className="flex items-center justify-between px-4 py-2 bg-gray-800 bg-opacity-50 rounded-lg">
                 <div className="flex items-center">
-                  {connectionStatus ? 
+                  {1==1 ? 
                     <Wifi className="h-4 w-4 text-green-400 mr-2 animate-pulse" /> : 
                     <WifiOff className="h-4 w-4 text-red-400 mr-2" />
                   }
-                  <span className={`font-medium ${connectionStatus ? 'text-green-400' : 'text-red-400'}`}>
-                    {connectionStatus ? 'CONNECTED' : 'OFFLINE'}
+                  <span className={`font-medium ${1==1 ? 'text-green-400' : 'text-red-400'}`}>
+                    {1==1 ? 'CONNECTED' : 'OFFLINE'}
                   </span>
                 </div>
               </div>

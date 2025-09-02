@@ -14,7 +14,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Subscribe to latest image updates
+// NOTE: This function is not used by the components you provided, but I've left it here.
+// The original `subscribeToLatestTelemetry` is what's being used and is more efficient.
 export function subscribeToLatestImageBase64(callback) {
   const imageLogRef = ref(database, "image_log");
   return onValue(imageLogRef, (snapshot) => {
@@ -23,36 +24,70 @@ export function subscribeToLatestImageBase64(callback) {
       callback(null);
       return;
     }
-    const validEntries = Object.entries(data)
-      .filter(([_, value]) => value && value.image_base64);
+    const validEntries = Object.values(data)
+      .filter((value) => value && value.image_base64 && value.capture_timestamp);
+
     if (validEntries.length === 0) {
       callback(null);
       return;
     }
-    validEntries.sort(([a], [b]) => a.localeCompare(b));
-    const latest = validEntries[validEntries.length - 1][1];
+    // FIX: Sort by the actual timestamp string for reliability
+    validEntries.sort((a, b) => b.capture_timestamp.localeCompare(a.capture_timestamp));
+    
+    // The latest entry is now the first one in the sorted array
+    const latest = validEntries[0];
     callback(latest.image_base64);
   });
 }
 
-// It subscribes to the entire image gallery.
+// This function subscribes to the single latest entry for real-time telemetry.
+// It is more efficient than fetching the whole log.
+export function subscribeToLatestTelemetry(callback) {
+  const imageLogRef = ref(database, 'image_log');
+  const latestEntryQuery = query(imageLogRef, orderByKey(), limitToLast(1));
+
+  const unsubscribe = onValue(latestEntryQuery, (snapshot) => {
+    if (snapshot.exists()) {
+      let latestData = null;
+      // The snapshot will only contain one child
+      snapshot.forEach((childSnapshot) => {
+        latestData = childSnapshot.val();
+      });
+      callback(latestData);
+    } else {
+      callback(null);
+    }
+  }, (error) => {
+    console.error("Firebase subscription error:", error);
+    callback(null);
+  });
+  return unsubscribe;
+}
+
+
+// FIX: This function now correctly sorts the entire gallery in descending order.
 export function subscribeToImageGallery(callback) {
   const galleryRef = ref(database, "image_log");
 
   return onValue(galleryRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      // Convert the Firebase object into an array of image objects
       const imageArray = Object.values(data);
 
-      // Sort the array to show the newest images first
-      imageArray.sort((a, b) => b.timestamp - a.timestamp);
+      // --- ROBUST DESCENDING SORT LOGIC ---
+      // This new sort function safely handles entries that might be missing a timestamp.
+      imageArray.sort((a, b) => {
+        // If an item is missing a timestamp, treat it as "older" by pushing it to the end.
+        if (!b?.capture_timestamp) return -1;
+        if (!a?.capture_timestamp) return 1;
+        
+        // If both timestamps exist, compare them as strings to sort newest first.
+        return b.capture_timestamp.localeCompare(a.capture_timestamp);
+      });
 
-      // Pass the sorted array to the callback function
       callback(imageArray);
     } else {
-      // If there are no images, return an empty array
-      callback([]);
+      callback([]); // If there's no data, callback with an empty array
     }
   });
 }
