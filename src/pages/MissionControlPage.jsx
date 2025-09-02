@@ -96,7 +96,7 @@ const MissionControlPage = () => {
           {/* Circular Button */}
           <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center overflow-hidden shadow-2xl transform group-hover:scale-110 transition-all duration-300 ease-in-out">
             <img 
-              src="/profile.png" // Make sure your image is in the `public` folder
+              src="/profile.jpg" // Make sure your image is in the `public` folder
               alt="Creator: Abrar Khan Alvi"
               className="w-full h-full object-cover"
             />
