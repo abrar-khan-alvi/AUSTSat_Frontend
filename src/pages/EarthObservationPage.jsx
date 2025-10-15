@@ -66,7 +66,7 @@ useEffect(() => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
               </div>
               <div className="p-4">
-                <div className="text-blue-400 text-xs font-semibold mb-1">CAPTURED</div>
+                <div className="text-blue-400 text-xs font-semibold mb-1">CAPTURED: {index + 1}</div>
                 <div className="text-gray-300 font-mono text-sm">{new Date(img.sensor_readings.capture_timestamp).toLocaleDateString()}</div>
                 <div className="text-gray-400 font-mono text-xs">{new Date(img.sensor_readings.capture_timestamp).toLocaleTimeString()}</div>
               </div>
