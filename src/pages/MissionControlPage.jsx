@@ -4,7 +4,7 @@ import SatelliteStatusCard from '../components/SatelliteStatusCard';
 import OrientationVisualizer from '../components/OrientationVisualizer';
 import CompassDial from '../components/CompassDial';
 import MissionControlImageDisplay from '../components/MissionControlImageDisplay';
-import { Thermometer, Zap, Droplets, Gauge, CheckCircle, Loader2, X } from 'lucide-react';
+import { Thermometer, Zap, Droplets, Gauge, CheckCircle, Loader2, X,Users } from 'lucide-react';
 
 // --- Creator Modal Component ---
 const CreatorsModal = ({ onClose }) => {
@@ -107,7 +107,18 @@ const MissionControlPage = () => {
 
   return (
     <>
-      <div className="space-y-8 px-4 md:px-8 pb-8">
+      <div className="space-y-5 px-4 md:px-8 pb-8">
+        
+        {/* --- Wrapper to center the button --- */}
+        <div className="flex justify-center">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="px-6 text-lg text-blue-200 border border-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors duration-300 font-semibold"
+          >
+            THE BRAIN
+          </button>
+        </div>
+
         {/* --- Top Header --- */}
         <div className="bg-gradient-to-r from-blue-900 to-purple-900 rounded-xl p-8 border border-gray-700">
           <div className="flex flex-col md:flex-row items-center justify-between">
@@ -117,7 +128,7 @@ const MissionControlPage = () => {
               <p className="text-blue-200">Real-time environmental and stability monitoring</p>
             </div>
 
-            {/* Right Side: Status & Button */}
+            {/* Right Side: Status */}
             <div className="flex flex-col items-center md:items-end">
               <div className="text-right">
                 <div className="text-sm text-blue-200">SYSTEM STATUS</div>
@@ -126,13 +137,6 @@ const MissionControlPage = () => {
                   OPERATIONAL
                 </div>
               </div>
-              
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="mt-4 px-5 py-2 text-blue-200 border border-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors duration-300 font-semibold"
-              >
-                Brain Behind the Programming
-              </button>
             </div>
           </div>
         </div>
