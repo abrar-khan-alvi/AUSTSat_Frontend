@@ -5,7 +5,7 @@ A real-time web dashboard for the AUST Nano Satellite project, designed to monit
 
 ### 🚀 [View Live Demo](https://austsat.vercel.app/) 🚀
 
-![AUSTSat Dashboard Demo](https://raw.githubusercontent.com/abrar-khan-alvi/AUSTSat_Frontend/main/demo.png)
+![AUSTSat Dashboard Demo](https://github.com/abrar-khan-alvi/AUSTSat_Frontend/blob/main/demo.png)
 
 ---
 
@@ -54,7 +54,7 @@ The ground station is a receive-only and processing hub.
 
 The following diagram illustrates the full system architecture of the AUSTSat mission, from the satellite in orbit to the mission control dashboard.
 
-![AUSTSat System Architecture](https://raw.githubusercontent.com/abrar-khan-alvi/AUSTSat_Frontend/main/system_design.png)
+![AUSTSat System Architecture](https://github.com/abrar-khan-alvi/AUSTSat_Frontend/blob/main/system_design.png)
 
 ### Architecture Breakdown
 
