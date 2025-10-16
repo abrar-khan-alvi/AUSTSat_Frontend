@@ -47,6 +47,19 @@ A Python script runs on the Raspberry Pi, continuously reading sensor data, capt
     -   [**Vercel**](https://vercel.com/) for continuous deployment and hosting.
     -   [**GitHub**](https://github.com/) for version control.
 
+## System Architecture
+
+The following diagram illustrates the full system architecture of the AUSTSat mission, from the satellite in orbit to the mission control dashboard.
+
+![AUSTSat System Architecture]([./docs/system-architecture.png](https://github.com/abrar-khan-alvi/AUSTSat_Frontend/blob/main/system_design.png))
+
+### Architecture Breakdown
+
+-   **Space Segment:** The AUSTSat satellite captures images and telemetry data using its onboard Pi Camera and Sense HAT.
+-   **Ground Segment:** A ground station receives the raw signal via a radio receiver. A Python script running on a Raspberry Pi processes this data stream, decodes it, and publishes the final JSON payload.
+-   **Cloud Platform:** The data is pushed to Firebase Realtime Database. The frontend application is built and deployed globally via Vercel.
+-   **Client Application:** The Mission Control Operator views the live data on a React-based dashboard, which subscribes to real-time updates from Firebase.
+
 ## Local Setup and Installation
 
 To run this project locally, follow these steps:
