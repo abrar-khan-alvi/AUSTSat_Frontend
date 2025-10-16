@@ -51,7 +51,7 @@ A Python script runs on the Raspberry Pi, continuously reading sensor data, capt
 
 The following diagram illustrates the full system architecture of the AUSTSat mission, from the satellite in orbit to the mission control dashboard.
 
-![AUSTSat System Architecture]([./docs/system-architecture.png](https://github.com/abrar-khan-alvi/AUSTSat_Frontend/blob/main/system_design.png))
+![AUSTSat System Architecture](https://github.com/abrar-khan-alvi/AUSTSat_Frontend/blob/main/system_design.png)
 
 ### Architecture Breakdown
 
