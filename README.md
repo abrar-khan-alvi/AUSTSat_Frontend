@@ -3,7 +3,7 @@
 
 A real-time web dashboard for the AUST Nano Satellite project, designed to monitor telemetry data and imagery downlinked from an orbiting satellite. This application uses React for the frontend and Firebase Realtime Database for live data synchronization.
 
-### 🚀 [View Live Demo](https://austsat.vercel.app/) 🚀
+### 🚀 [View Live Demo](https://austnanosat.vercel.app/) 🚀
 
 ![AUSTSat Dashboard Demo](https://github.com/abrar-khan-alvi/AUSTSat_Frontend/blob/main/demo.png)
 
